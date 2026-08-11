@@ -1,4 +1,8 @@
 #!/usr/bin/env node
+/**
+ * Copyright (c) 2026 Mulixo
+ * SPDX-License-Identifier: MIT
+ */
 import { spawn } from "node:child_process";
 import { loadConfig } from "../src/store/config-store.js";
 import { fetchAccountQuota } from "../src/providers/index.js";

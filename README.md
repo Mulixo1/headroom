@@ -2,6 +2,8 @@
 
 Local macOS menubar + localhost dashboard for remaining AI usage.
 
+**Copyright (c) 2026 Mulixo** · **License: MIT** · **SPDX-License-Identifier: MIT**
+
 Shows remaining capacity for:
 
 - **GPT** (ChatGPT / Codex)
@@ -232,38 +234,35 @@ node bin/headroom.mjs service uninstall
 
 ---
 
-## License
+## License and ownership
 
-This repository is licensed under the **MIT License**.
-
+- Copyright holder: **Mulixo**
+- License: **MIT**
 - Full legal text: [`LICENSE`](./LICENSE)
 - Short notice: [`NOTICE`](./NOTICE)
-- Plain-language notes: [`docs/LEGAL.md`](./docs/LEGAL.md)
+- Plain-language explanation: [`docs/LEGAL.md`](./docs/LEGAL.md)
 
-Copyright (c) 2026 Mulixo.
-
+```text
+Copyright (c) 2026 Mulixo
 SPDX-License-Identifier: MIT
+```
 
-### What this means
+### Meaning
 
-- Copyright remains with the copyright holder (Mulixo)
-- MIT grants broad use/modification/distribution permissions under the license terms
-- The software is provided “AS IS”, without warranty
+- Ownership of original repository code remains with Mulixo
+- MIT grants broad use/modification/distribution rights under the license terms
+- Software is provided “AS IS”, without warranty
 
-### What this does not mean
+### Non-claims
 
-- Not affiliated with OpenAI, xAI, SwiftBar, Apple, or other third parties
+- No affiliation with OpenAI, xAI, SwiftBar, Apple, or other third parties
 - No transfer of third-party trademarks or service rights
-- No guarantee of provider API availability or account policy compliance outcomes
+- No guarantee regarding third-party APIs, accounts, or terms outcomes
 
 ## Disclaimer
 
-Headroom is an independent local utility for displaying remaining usage information using local configuration/auth material already present on the user’s machine.
+Headroom is an independent local utility. It may use local configuration/auth material already present on a user machine to display remaining usage information.
 
-Users are responsible for:
+Users are responsible for their own accounts, credentials, machines, and compliance with third-party terms.
 
-- their own provider accounts and credentials
-- compliance with third-party terms
-- deciding whether this tool is appropriate for their environment
-
-This repository documentation is technical product documentation, not legal advice.
+Repository docs are technical documentation, not personalized legal advice.

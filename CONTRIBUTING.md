@@ -1,5 +1,8 @@
 # Contributing
 
+Copyright (c) 2026 Mulixo. Contributions are accepted under MIT (`LICENSE`).
+
+
 ## Before you contribute
 
 By submitting a contribution, you confirm that:

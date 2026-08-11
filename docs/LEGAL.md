@@ -1,80 +1,106 @@
-# Legal & Licensing Notes
+# Legal, Ownership, and License Notes
 
-This document explains the licensing and ownership statements used in this repository in plain language.
+This document explains the legal statements used in this repository in plain language.
 
-This is informational documentation for the project, not personalized legal advice.
+This is project documentation, not personalized legal advice.
 
-## 1) Copyright ownership
+## 1) Copyright owner
 
-The software in this repository is copyrighted by:
+The original source code published in this repository is copyrighted as:
 
 ```text
 Copyright (c) 2026 Mulixo
 ```
 
-That means Mulixo is identified as the copyright holder of the Headroom source code published in this repository.
+Meaning:
 
-## 2) What “MIT License” means here
+- Mulixo is the copyright holder of Headroom's original code in this repository
+- MIT does **not** transfer ownership away from Mulixo
+- MIT only grants usage permissions under the license terms
 
-This project uses the MIT License text in [`LICENSE`](../LICENSE).
+## 2) License type and legal basis
 
-MIT is a widely used open-source license template. Using MIT does **not** mean:
+License: **MIT**
 
-- a government office certified the project
-- a third-party “MIT authority” approved the repo
-- ownership transferred away from the copyright holder
+Canonical legal text:
 
-It means the copyright holder grants permissions under the MIT terms.
+- [`LICENSE`](../LICENSE)
 
-Under MIT, recipients are generally permitted to use, copy, modify, merge, publish, distribute, sublicense, and sell copies of the software, subject to keeping the copyright and permission notice.
+Machine-readable declaration:
 
-The software is provided **“AS IS”**, without warranty.
+- `package.json` field: `"license": "MIT"`
+- SPDX id: `MIT`
 
-## 3) Why MIT appears in multiple places
+Short notice:
 
-For clarity and tooling compatibility, MIT is declared in:
+- [`NOTICE`](../NOTICE)
 
-- `LICENSE` (full legal text)
-- `package.json` (`"license": "MIT"`)
-- `NOTICE` (short ownership + SPDX marker)
-- README license section
+There is no separate "MIT certification authority."
+In open source practice, a valid MIT release is established by:
 
-This is standard open-source practice.
+1. copyright holder statement
+2. standard MIT license text in the repository
+3. consistent metadata (`package.json`, SPDX/docs)
 
-## 4) What MIT does not cover
+GitHub license detection for this repository should report MIT when `LICENSE` is present.
 
-MIT licenses the **software code** in this repository. It does not automatically grant rights to:
+## 3) What recipients may do under MIT
 
-- third-party trademarks or brand names
-- third-party apps (for example SwiftBar)
-- third-party accounts/services (for example OpenAI/ChatGPT/Codex or xAI/Grok)
-- any credentials stored on a user’s machine
+Subject to MIT terms, recipients may generally:
 
-## 5) Third-party services and local credentials
+- use
+- copy
+- modify
+- merge
+- publish
+- distribute
+- sublicense
+- sell copies
 
-Headroom is a local helper. Depending on configuration, it may read local credential/session files created by other tools (for example `~/.codex/auth.json` or `~/.grok/auth.json`) and call provider endpoints for usage data.
+Condition:
 
-Important boundaries:
+- keep the copyright notice and permission notice in copies/substantial portions
 
-- Headroom does not create provider accounts
-- Headroom does not sell or redistribute provider credentials
-- Users remain responsible for their own accounts, credentials, and provider terms of use
-- Provider API availability/behavior can change at any time
+## 4) What MIT does not grant
 
-## 6) No affiliation statement
+MIT does **not** automatically grant:
 
-Unless explicitly stated, Headroom is independent and not affiliated with, endorsed by, or sponsored by OpenAI, xAI, SwiftBar, Apple, or other third parties whose names may appear in documentation for interoperability purposes.
+- ownership of third-party trademarks
+- rights to third-party services/accounts
+- rights to credentials on a user's machine
+- any warranty
+- endorsement by OpenAI, xAI, SwiftBar, Apple, or others
 
-## 7) Trademark note
+## 5) Warranty and liability
 
-Product and company names used in docs are for identification/interoperability only.
-No trademark license is granted by this repository except as required to truthfully describe compatibility.
+As stated in MIT:
 
-## 8) Warranty and liability
+- software is provided **"AS IS"**
+- no express or implied warranty
+- authors/copyright holders are not liable for damages to the maximum extent permitted by applicable law
 
-As stated in the MIT License, the software is provided without warranty.
-To the maximum extent allowed by applicable law, authors and copyright holders are not liable for damages arising from use of the software.
+## 6) Third-party services and user responsibility
+
+Headroom is a local utility. It may read local auth/session files created by other tools and query provider endpoints for usage data.
+
+Users remain responsible for:
+
+- their own credentials and machines
+- compliance with third-party terms of use
+- whether this tool is appropriate for their environment
+
+Headroom does not sell, broker, or intentionally redistribute provider credentials.
+
+## 7) Contribution terms
+
+By contributing to this repository, contributors agree their contributions are submitted under the same MIT terms (`LICENSE`) and that they have rights to submit them.
+
+See [`CONTRIBUTING.md`](../CONTRIBUTING.md).
+
+## 8) No affiliation
+
+Unless explicitly stated otherwise, Headroom is independent and not affiliated with, endorsed by, or sponsored by OpenAI, xAI, SwiftBar, Apple, or other third parties named for interoperability.
 
 ## 9) Security reports
 
-Please use private GitHub security advisories for vulnerability reports. See [`SECURITY.md`](../SECURITY.md).
+Use private GitHub security advisories. See [`SECURITY.md`](../SECURITY.md).

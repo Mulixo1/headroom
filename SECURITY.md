@@ -38,3 +38,7 @@ Security fixes are considered for the latest published release on `main`.
 - Keep provider CLIs/apps updated
 - Do not commit auth files or machine-local config
 - Review LaunchAgent status if Node paths change (`node bin/headroom.mjs service status`)
+
+## Ownership
+
+Copyright (c) 2026 Mulixo. Licensed under MIT. See `LICENSE` and `docs/LEGAL.md`.

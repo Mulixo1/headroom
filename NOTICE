@@ -1,13 +1,19 @@
 Headroom
 Copyright (c) 2026 Mulixo
 
-This product is licensed under the MIT License.
-See the LICENSE file for the full license text.
+Licensed under the MIT License.
+Full license text: LICENSE
+Plain-language notes: docs/LEGAL.md
 
 SPDX-License-Identifier: MIT
 
-Third-party names and trademarks (including but not limited to OpenAI,
-ChatGPT, Codex, xAI, Grok, SwiftBar, Apple, and macOS) are the property
-of their respective owners. Headroom is an independent local utility and
-is not affiliated with, endorsed by, or sponsored by those parties unless
-explicitly stated.
+Ownership
+- Copyright holder of this repository's original source: Mulixo
+- GitHub publisher account: Mulixo1
+- Project homepage: https://github.com/Mulixo1/headroom
+
+Third-party trademarks
+OpenAI, ChatGPT, Codex, xAI, Grok, SwiftBar, Apple, macOS and other product
+or company names are trademarks of their respective owners. They appear only
+to describe interoperability. This project is independent and not affiliated
+with, endorsed by, or sponsored by those parties unless explicitly stated.

@@ -2,7 +2,7 @@
   "name": "headroom",
   "version": "0.1.1",
   "private": true,
-  "description": "macOS menubar + local panel for GPT and x (Grok) remaining usage headroom.",
+  "description": "Local macOS menubar and localhost dashboard for remaining GPT and Grok usage (MIT-licensed).",
   "type": "module",
   "bin": {
     "headroom": "./bin/headroom.mjs"
@@ -23,18 +23,18 @@
     "ci": "npm test && node bin/headroom.mjs help"
   },
   "files": [
-    "bin/",
-    "src/",
-    "scripts/",
-    "docs/",
-    "config.example.json",
+    "AGENTS.md",
+    "CONTRIBUTING.md",
     "LICENSE",
+    "NOTICE",
     "README.md",
     "SECURITY.md",
-    "CONTRIBUTING.md",
-    "AGENTS.md",
-    "NOTICE",
-    "docs/LEGAL.md"
+    "bin/",
+    "config.example.json",
+    "docs/",
+    "docs/LEGAL.md",
+    "scripts/",
+    "src/"
   ],
   "engines": {
     "node": ">=20"

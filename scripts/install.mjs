@@ -1,5 +1,9 @@
 #!/usr/bin/env node
 /**
+ * Copyright (c) 2026 Mulixo
+ * SPDX-License-Identifier: MIT
+ */
+/**
  * One-click local installer for Headroom.
  * Hybrid dependency policy:
  * - Headroom service/autostart/plugin: automatic
