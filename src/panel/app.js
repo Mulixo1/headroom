@@ -279,12 +279,10 @@ async function refreshService() {
         el.textContent = tt("swiftbarMissing");
       }
     }
-    const installBtn = $("#btn-install-swiftbar");
-    if (installBtn) installBtn.disabled = Boolean(sb.installed);
     const openBtn = $("#btn-open-swiftbar");
     if (openBtn) openBtn.disabled = !sb.installed;
-    const site = $("#btn-swiftbar-site");
-    if (site && sb.downloadUrl) site.href = sb.downloadUrl;
+    const code = $("#swiftbar-install-cmd");
+    if (code) code.style.display = sb.installed ? "none" : "block";
   } catch {
     const el = $("#swiftbar-state");
     if (el) el.textContent = "—";
@@ -385,19 +383,6 @@ function bind() {
     await setLanguage(e.target.value);
   };
 
-  const installSb = $("#btn-install-swiftbar");
-  if (installSb) {
-    installSb.onclick = async () => {
-      setStatus(tt("installingSwiftBar"));
-      try {
-        await api("/api/deps/swiftbar/install", { method: "POST", body: "{}" });
-        await refreshService();
-        setStatus(tt("swiftBarInstalled"));
-      } catch (e) {
-        setStatus(e.message || String(e));
-      }
-    };
-  }
   const openSb = $("#btn-open-swiftbar");
   if (openSb) {
     openSb.onclick = async () => {

@@ -18,7 +18,6 @@ import {
 } from "../core/service.js";
 import {
   dependencyReport,
-  installSwiftBarWithBrew,
   openSwiftBarApp,
   detectSwiftBar,
 } from "../core/deps.js";
@@ -355,15 +354,6 @@ export function createServer() {
 
       if (pathname === "/api/deps" && req.method === "GET") {
         return sendJson(res, 200, dependencyReport());
-      }
-
-      if (pathname === "/api/deps/swiftbar/install" && req.method === "POST") {
-        const result = installSwiftBarWithBrew();
-        // rewrite plugin if install succeeded
-        if (result.ok) {
-          try { autoSync(loadConfig()); } catch {}
-        }
-        return sendJson(res, result.ok ? 200 : 500, result);
       }
 
       if (pathname === "/api/deps/swiftbar/open" && req.method === "POST") {
