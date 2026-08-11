@@ -1,60 +1,30 @@
-# Headroom architecture
+# Architecture
 
-## Goals
+## Runtime pieces
 
-- Menubar remaining percent only (`GPT 85% · x 98%`)
-- Localhost panel for visibility toggles + language
-- GPT + x only (plug and play)
-- Local-first, no cloud dependency, no proxy auth
+1. **Local service** (`bin/headroom.mjs start`)
+   - localhost API + dashboard on `127.0.0.1:8787`
+2. **Providers**
+   - GPT: ChatGPT/Codex WHAM usage endpoint via `~/.codex/auth.json`
+   - x: Grok credits endpoint via `~/.grok/auth.json`
+3. **SwiftBar plugin generator**
+   - writes `~/Library/Application Support/SwiftBar/Plugins/headroom-combined.<n>s.sh`
+4. **LaunchAgent autostart**
+   - `~/Library/LaunchAgents/com.headroom.app.plist`
 
-## Runtime data
+## Data locations
 
-User config directory (not the git tree):
+| Data | Location |
+|---|---|
+| Headroom config | `~/Library/Application Support/Headroom/config.json` |
+| Logs | `~/Library/Application Support/Headroom/logs/` |
+| SwiftBar plugin | `~/Library/Application Support/SwiftBar/Plugins/` |
+| GPT auth | `~/.codex/auth.json` |
+| Grok auth | `~/.grok/auth.json` |
 
-- macOS: `~/Library/Application Support/Headroom/config.json`
+## Security boundaries
 
-Auth files stay provider-native:
-
-- `~/.codex/auth.json`
-- `~/.grok/auth.json`
-
-## Provider contract
-
-```ts
-type QuotaSnapshot = {
-  provider: string;
-  accountId: string;
-  label: string;
-  usedPercent: number | null;
-  remainingPercent: number | null;
-  resetAt?: string | null;
-  plan?: string | null;
-  email?: string | null;
-  source: string;
-  fetchedAt: string;
-  error?: string | null;
-};
-```
-
-Server strips internal `raw` fields before responding.
-
-## Local API
-
-- `GET /api/health`
-- `GET /api/providers`
-- `GET|PUT /api/settings`
-- `GET|POST /api/accounts`
-- `PUT|DELETE /api/accounts/:id`
-- `GET /api/quota`
-- `GET /api/quota/:id`
-- `POST /api/swiftbar/sync`
-- `POST /api/swiftbar/reset`
-- `POST /api/swiftbar/close`
-
-All endpoints require local sockets.
-
-## Menubar
-
-SwiftBar plugin is generated to:
-
-`~/Library/Application Support/SwiftBar/Plugins/headroom-combined.<n>s.sh`
+- Bind address forced to localhost
+- Non-local sockets rejected
+- API responses exclude raw provider payloads
+- No secrets in repository files

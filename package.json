@@ -47,5 +47,14 @@
     "usage",
     "headroom",
     "macos"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mulixo1/headroom.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Mulixo1/headroom/issues"
+  },
+  "homepage": "https://github.com/Mulixo1/headroom#readme",
+  "author": "Mulixo"
 }
