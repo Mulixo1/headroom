@@ -127,18 +127,29 @@ export function installLaunchAgent() {
   const body = renderLaunchAgentPlist();
   fs.writeFileSync(plistPath, body, { mode: 0o644 });
 
-  run("launchctl", ["bootout", `gui/${process.getuid()}`, plistPath]);
-  run("launchctl", ["unload", plistPath]);
-  let loaded = run("launchctl", ["bootstrap", `gui/${process.getuid()}`, plistPath]);
+  const domain = `gui/${process.getuid()}`;
+  run("launchctl", ["bootout", domain, LABEL]);
+  run("launchctl", ["bootout", domain, plistPath]);
+  run("launchctl", ["unload", "-w", plistPath]);
+
+  let loaded = run("launchctl", ["bootstrap", domain, plistPath]);
   if (loaded.status !== 0) {
     loaded = run("launchctl", ["load", "-w", plistPath]);
   }
-  run("launchctl", ["kickstart", "-k", `gui/${process.getuid()}/${LABEL}`]);
+  run("launchctl", ["enable", `${domain}/${LABEL}`]);
+  let kicked = run("launchctl", ["kickstart", "-k", `${domain}/${LABEL}`]);
+  if (kicked.status !== 0) {
+    kicked = run("launchctl", ["start", LABEL]);
+  }
+  const printed = run("launchctl", ["print", `${domain}/${LABEL}`]);
+  const registered = printed.status === 0;
+  const ok = loaded.status === 0 && registered;
   return {
-    ok: loaded.status === 0,
+    ok,
     path: plistPath,
     label: LABEL,
-    error: loaded.status === 0 ? null : loaded.stderr || loaded.stdout || "launchctl load failed",
+    registered,
+    error: ok ? null : (loaded.stderr || loaded.stdout || printed.stderr || printed.stdout || "launchctl registration failed"),
     inspection: inspectLaunchAgent(),
   };
 }
@@ -203,12 +214,28 @@ export function uninstallAll({ removeConfig = true } = {}) {
   return { ok: true, launch, plugins, configRemoved };
 }
 
+export function isLaunchAgentRegistered() {
+  if (process.platform !== "darwin") return false;
+  const domain = `gui/${process.getuid()}`;
+  const printed = run("launchctl", ["print", `${domain}/${LABEL}`]);
+  return printed.status === 0;
+}
+
+export function isServiceListening(port = 8787) {
+  const res = run("lsof", ["-nP", `-iTCP:${port}`, "-sTCP:LISTEN"]);
+  return res.status === 0 && String(res.stdout || "").includes(String(port));
+}
+
 export function serviceStatus() {
   const inspection = inspectLaunchAgent();
+  const registered = isLaunchAgentRegistered();
+  const listening = isServiceListening(8787);
   return {
     platform: process.platform,
     launchAgentInstalled: inspection.installed,
-    launchAgentHealthy: inspection.healthy,
+    launchAgentHealthy: inspection.healthy && registered,
+    launchAgentRegistered: registered,
+    serviceListening: listening,
     launchAgentPath: launchAgentPath(),
     launchAgent: inspection,
     appEntry: appEntry(),

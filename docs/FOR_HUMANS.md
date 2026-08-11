@@ -154,3 +154,25 @@ node bin/headroom.mjs open
 node bin/headroom.mjs service status
 node bin/headroom.mjs sync-swiftbar
 ```
+
+
+## Background service
+
+After install you should **not** need a terminal session:
+
+```bash
+node bin/headroom.mjs start
+```
+
+Use:
+
+```bash
+node bin/headroom.mjs service status
+open http://127.0.0.1:8787
+```
+
+Repair if needed:
+
+```bash
+node bin/headroom.mjs service repair
+```

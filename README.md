@@ -135,6 +135,21 @@ node scripts/install.mjs --no-open
 
 Dashboard: http://127.0.0.1:8787
 
+### Background service
+
+After install, do **not** keep a foreground terminal running:
+
+```bash
+node bin/headroom.mjs start
+```
+
+Headroom should run via LaunchAgent and survive logout/login.
+
+```bash
+node bin/headroom.mjs service status
+node bin/headroom.mjs service repair
+```
+
 ---
 
 ## Uninstall

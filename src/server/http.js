@@ -17,6 +17,7 @@ import {
   serviceStatus,
   uninstallAll,
 } from "../core/service.js";
+import { headroomHome, ensureDir } from "../core/paths.js";
 import {
   dependencyReport,
   openSwiftBarApp,
@@ -28,6 +29,39 @@ const PANEL_DIR = path.resolve(__dirname, "../panel");
 const MAX_BODY_BYTES = 64 * 1024;
 
 let activeServer = null;
+
+function pidLockPath() {
+  return path.join(headroomHome(), "headroom.pid");
+}
+
+function isPidAlive(pid) {
+  if (!pid || !Number.isInteger(pid)) return false;
+  try { process.kill(pid, 0); return true; } catch { return false; }
+}
+
+function acquirePidLock() {
+  ensureDir(headroomHome());
+  const file = pidLockPath();
+  if (fs.existsSync(file)) {
+    try {
+      const prev = Number(String(fs.readFileSync(file, "utf8")).trim());
+      if (isPidAlive(prev) && prev !== process.pid) {
+        return { ok: false, pid: prev, file };
+      }
+    } catch {}
+  }
+  fs.writeFileSync(file, String(process.pid));
+  return { ok: true, pid: process.pid, file };
+}
+
+function releasePidLock() {
+  const file = pidLockPath();
+  try {
+    if (!fs.existsSync(file)) return;
+    const prev = Number(String(fs.readFileSync(file, "utf8")).trim());
+    if (!prev || prev === process.pid) fs.unlinkSync(file);
+  } catch {}
+}
 
 function sendJson(res, status, body) {
   const data = JSON.stringify(body);
@@ -418,18 +452,27 @@ export function startServer({ host, port } = {}) {
   if (!Number.isInteger(listenPort) || listenPort < 1024 || listenPort > 65535) {
     throw new Error("Invalid HEADROOM_PORT");
   }
+
+  const lock = acquirePidLock();
+  if (!lock.ok) {
+    const err = new Error(`Headroom already running (pid ${lock.pid}). Use background service; no need to start manually.`);
+    err.code = "HEADROOM_ALREADY_RUNNING";
+    err.pid = lock.pid;
+    throw err;
+  }
+
   const server = createServer();
   activeServer = server;
+  const cleanup = () => { try { releasePidLock(); } catch {} };
+  process.once("exit", cleanup);
+  process.once("SIGINT", cleanup);
+  process.once("SIGTERM", cleanup);
+
   return new Promise((resolve, reject) => {
-    server.once("error", reject);
+    server.once("error", (err) => { cleanup(); reject(err); });
     server.listen(listenPort, listenHost, () => {
-      try {
-        autoSync(cfg);
-      } catch {}
-      // If autostart exists but node/repo path drifted, repair it.
-      try {
-        ensureLaunchAgentHealthy();
-      } catch {}
+      try { autoSync(cfg); } catch {}
+      try { ensureLaunchAgentHealthy(); } catch {}
       resolve({
         server,
         host: listenHost,

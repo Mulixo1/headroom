@@ -127,3 +127,21 @@ If Node version manager paths change (e.g. nvm), repair LaunchAgent:
 node bin/headroom.mjs service repair
 node bin/headroom.mjs service status
 ```
+
+
+## Background service expectation
+
+Do not keep foreground `node bin/headroom.mjs start` after install.
+
+Verify:
+
+```bash
+node bin/headroom.mjs service status
+curl -s http://127.0.0.1:8787/api/health
+```
+
+Repair/re-enable:
+
+```bash
+node bin/headroom.mjs service repair
+```

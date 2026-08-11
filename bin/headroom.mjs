@@ -19,10 +19,10 @@ Usage:
   headroom open                  Open panel in browser
   headroom quota                 Print remaining quotas
   headroom sync-swiftbar         Generate SwiftBar plugins
-  headroom service install       Install login autostart (LaunchAgent)
-  headroom service repair        Repair autostart paths if Node/repo moved
-  headroom service status        Show autostart status
-  headroom service uninstall     Remove autostart + menubar + local config
+  headroom service install       Install/enable background service + login autostart
+  headroom service repair        Repair and re-enable background service
+  headroom service status        Show background service status
+  headroom service uninstall     Remove background service + menubar + local config
   headroom help
 
 One-click setup:
@@ -54,8 +54,19 @@ async function cmdSync() {
 }
 
 async function cmdStart() {
-  const { url } = await startServer();
-  console.log(`Headroom running at ${url}`);
+  try {
+    const { url } = await startServer();
+    console.log(`Headroom running at ${url}`);
+    console.log("Background service managed by LaunchAgent (survives logout/login).");
+  } catch (err) {
+    if (err?.code === "HEADROOM_ALREADY_RUNNING" || /EADDRINUSE|already running/i.test(String(err?.message || err))) {
+      console.log("Headroom already running in background.");
+      console.log("Dashboard: http://127.0.0.1:8787");
+      console.log("Status: node bin/headroom.mjs service status");
+      process.exit(0);
+    }
+    throw err;
+  }
 
   const keepAlive = setInterval(() => {}, 1 << 30);
   const shutdown = (signal) => {
