@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "settings": {
+    "host": "127.0.0.1",
+    "port": 8787,
+    "refreshSeconds": 30,
+    "showUsedInDropdown": true,
+    "menubarMode": "detail",
+    "menubarJoin": " \u00b7 ",
+    "menubarEmptyTitle": "HR",
+    "locale": "system",
+    "swiftbarPluginDir": ""
+  },
+  "accounts": [
+    {
+      "id": "gpt-main",
+      "provider": "chatgpt-wham",
+      "label": "GPT",
+      "enabled": true,
+      "menubar": true,
+      "showInBar": true,
+      "showInDetail": true,
+      "order": 10,
+      "auth": {
+        "mode": "file",
+        "path": "~/.codex/auth.json",
+        "jsonPath": "tokens.access_token"
+      }
+    },
+    {
+      "id": "x-main",
+      "provider": "xai-credits",
+      "label": "x",
+      "enabled": true,
+      "menubar": true,
+      "showInBar": true,
+      "showInDetail": true,
+      "order": 20,
+      "auth": {
+        "mode": "file",
+        "path": "~/.grok/auth.json",
+        "jsonPath": ""
+      }
+    }
+  ]
+}

@@ -1,0 +1,211 @@
+export const SUPPORTED_LOCALES = ["en", "tr"];
+
+const dict = {
+  en: {
+    htmlLang: "en",
+    title: "Headroom",
+    brandSub: "GPT · x · remaining",
+    healthOnline: "online",
+    healthOffline: "offline",
+    refresh: "Refresh",
+    syncMenubar: "Write to menubar",
+    accountsTitle: "Accounts",
+    accountsDesc: "Plug and play: GPT and x load automatically. Manage bar / detail visibility here.",
+    advanced: "Advanced settings",
+    host: "Host",
+    port: "Port",
+    refreshSec: "Refresh (sec)",
+    menubarMode: "Menubar mode",
+    modeDetail: "Show in title + detail",
+    modeCompact: "Short title, details on click",
+    menubarJoin: "Title separator",
+    emptyTitle: "Empty title",
+    pluginDir: "SwiftBar folder",
+    pluginDirPh: "empty = automatic",
+    saveSettings: "Save settings",
+    language: "Language",
+    langSystem: "System",
+    langEn: "English",
+    langTr: "Turkish",
+    barTitle: "Bar title",
+    visibleModels: "visible models",
+    avgRemaining: "Average remaining",
+    gptX: "GPT · x",
+    lowest: "Lowest",
+    priority: "priority",
+    noAccounts: "No GPT / x accounts.",
+    noData: "no data",
+    remainingUsed: "remaining · used %{used}",
+    inBar: "in bar",
+    barOff: "bar off",
+    inDetail: "in detail",
+    detailOff: "detail off",
+    processing: "working…",
+    removeFromBar: "Remove from bar",
+    addToBar: "Show in bar",
+    removeFromDetail: "Hide from detail",
+    addToDetail: "Show in detail",
+    refreshing: "Refreshing…",
+    refreshed: "Refreshed",
+    writingMenubar: "Writing menubar…",
+    savingSettings: "Saving settings…",
+    settingsSaved: "settings",
+    updated: "updated",
+    addingToBar: "Adding to bar…",
+    removingFromBar: "Removing from bar…",
+    addingToDetail: "Showing in detail…",
+    removingFromDetail: "Hiding from detail…",
+    menubarUpdated: "Menubar updated ({n} accounts{bar})",
+    barCount: ", bar {n}",
+    saved: "Saved",
+    offlinePrefix: "API offline: ",
+    dangerZone: "Danger zone",
+    uninstallTitle: "Uninstall Headroom",
+    uninstallDesc: "Removes menubar plugin, login autostart, and local Headroom config. Does not touch GPT/Grok auth files.",
+    uninstallBtn: "Uninstall completely",
+    uninstallConfirm: "Uninstall Headroom completely from this Mac?",
+    uninstalling: "Uninstalling…",
+    uninstalled: "Uninstalled. You can close this tab.",
+    autostart: "Login autostart",
+    autostartOn: "enabled",
+    autostartOff: "not installed",
+    installAutostart: "Enable login autostart",
+    installingAutostart: "Enabling autostart…",
+    autostartEnabled: "Login autostart enabled",
+    depsTitle: "Dependencies",
+    depsDesc: "Headroom runs locally. Menubar needs SwiftBar.",
+    swiftbarTitle: "SwiftBar",
+    swiftbarFound: "installed",
+    swiftbarMissing: "missing",
+    swiftbarRunning: "running",
+    installSwiftBar: "Install SwiftBar (Homebrew)",
+    openSwiftBar: "Open SwiftBar",
+    openSwiftBarSite: "Open download page",
+    installingSwiftBar: "Installing SwiftBar…",
+    swiftBarInstalled: "SwiftBar installed",
+    writePlugin: "Write menubar plugin",
+  },
+  tr: {
+    htmlLang: "tr",
+    title: "Headroom",
+    brandSub: "GPT · x · kalan limit",
+    healthOnline: "online",
+    healthOffline: "offline",
+    refresh: "Yenile",
+    syncMenubar: "Menubar’a yaz",
+    accountsTitle: "Hesaplar",
+    accountsDesc: "Tak-çalıştır: GPT ve x otomatik. Bar / detay görünümünü buradan yönet.",
+    advanced: "Gelişmiş ayarlar",
+    host: "Host",
+    port: "Port",
+    refreshSec: "Yenileme (sn)",
+    menubarMode: "Menubar görünümü",
+    modeDetail: "Başlıkta yaz + detay",
+    modeCompact: "Kısa başlık, detay tıklayınca",
+    menubarJoin: "Başlık birleştirici",
+    emptyTitle: "Boş başlık",
+    pluginDir: "SwiftBar klasörü",
+    pluginDirPh: "boş = otomatik",
+    saveSettings: "Ayarları kaydet",
+    language: "Dil",
+    langSystem: "Sistem",
+    langEn: "English",
+    langTr: "Türkçe",
+    barTitle: "Bar başlığı",
+    visibleModels: "görünen model",
+    avgRemaining: "Ortalama kalan",
+    gptX: "GPT · x",
+    lowest: "En düşük",
+    priority: "öncelik",
+    noAccounts: "GPT / x hesabı yok.",
+    noData: "veri yok",
+    remainingUsed: "kalan · tüketilen %{used}",
+    inBar: "bar'da",
+    barOff: "bar kapalı",
+    inDetail: "detayda",
+    detailOff: "detay kapalı",
+    processing: "işleniyor…",
+    removeFromBar: "Bar'dan çıkar",
+    addToBar: "Bar'a al",
+    removeFromDetail: "Detaydan çıkar",
+    addToDetail: "Detaya al",
+    refreshing: "Yenileniyor…",
+    refreshed: "Yenilendi",
+    writingMenubar: "Menubar yazılıyor…",
+    savingSettings: "Ayarlar kaydediliyor…",
+    settingsSaved: "ayarlar",
+    updated: "güncellendi",
+    addingToBar: "Bar'a alınıyor…",
+    removingFromBar: "Bar'dan çıkarılıyor…",
+    addingToDetail: "Detaya alınıyor…",
+    removingFromDetail: "Detaydan çıkarılıyor…",
+    menubarUpdated: "Menubar güncellendi ({n} hesap{bar})",
+    barCount: ", bar {n}",
+    saved: "Kaydedildi",
+    offlinePrefix: "API offline: ",
+    dangerZone: "Tehlikeli alan",
+    uninstallTitle: "Headroom'u kaldır",
+    uninstallDesc: "Menubar eklentisini, giriş autostart'ını ve yerel Headroom ayarlarını siler. GPT/Grok auth dosyalarına dokunmaz.",
+    uninstallBtn: "Tamamen kaldır",
+    uninstallConfirm: "Headroom bu Mac'ten tamamen kaldırılsın mı?",
+    uninstalling: "Kaldırılıyor…",
+    uninstalled: "Kaldırıldı. Bu sekmeyi kapatabilirsin.",
+    autostart: "Girişte otomatik başlat",
+    autostartOn: "açık",
+    autostartOff: "yok",
+    installAutostart: "Giriş autostart aç",
+    installingAutostart: "Autostart açılıyor…",
+    autostartEnabled: "Giriş autostart açıldı",
+    depsTitle: "Bağımlılıklar",
+    depsDesc: "Headroom yerel çalışır. Menubar için SwiftBar gerekir.",
+    swiftbarTitle: "SwiftBar",
+    swiftbarFound: "kurulu",
+    swiftbarMissing: "yok",
+    swiftbarRunning: "çalışıyor",
+    installSwiftBar: "SwiftBar kur (Homebrew)",
+    openSwiftBar: "SwiftBar'ı aç",
+    openSwiftBarSite: "İndirme sayfasını aç",
+    installingSwiftBar: "SwiftBar kuruluyor…",
+    swiftBarInstalled: "SwiftBar kuruldu",
+    writePlugin: "Menubar eklentisini yaz",
+  },
+};
+
+export function detectSystemLocale() {
+  const nav = (typeof navigator !== "undefined" && (navigator.language || navigator.userLanguage)) || "en";
+  const lower = String(nav).toLowerCase();
+  if (lower.startsWith("tr")) return "tr";
+  return "en";
+}
+
+export function normalizeLocale(value) {
+  if (!value || value === "system") return "system";
+  const v = String(value).toLowerCase();
+  if (v.startsWith("tr")) return "tr";
+  if (v.startsWith("en")) return "en";
+  return "system";
+}
+
+export function resolveLocale(setting) {
+  const n = normalizeLocale(setting);
+  if (n === "tr" || n === "en") return n;
+  return detectSystemLocale();
+}
+
+export function t(locale, key, vars = {}) {
+  const lang = resolveLocale(locale);
+  const table = dict[lang] || dict.en;
+  let out = table[key] ?? dict.en[key] ?? key;
+  for (const [k, v] of Object.entries(vars)) {
+    out = out.replaceAll(`{${k}}`, String(v));
+  }
+  return out;
+}
+
+export function localeOptions(current = "system") {
+  return [
+    { value: "system", labelKey: "langSystem" },
+    { value: "en", labelKey: "langEn" },
+    { value: "tr", labelKey: "langTr" },
+  ].map((o) => ({ ...o, selected: normalizeLocale(current) === o.value }));
+}

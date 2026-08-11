@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Headroom</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="top">
+        <div class="brand">
+          <div class="mark">HR</div>
+          <div>
+            <strong data-i18n="title">Headroom</strong>
+            <div class="sub" data-i18n="brandSub">GPT · x · remaining</div>
+          </div>
+        </div>
+        <div class="top-actions">
+          <label class="lang-wrap">
+            <span class="lang-label" data-i18n="language">Language</span>
+            <select id="set-language" aria-label="Language">
+              <option value="system">System</option>
+              <option value="en">English</option>
+              <option value="tr">Türkçe</option>
+            </select>
+          </label>
+          <span id="health" class="pill">…</span>
+          <button id="btn-refresh" class="btn" type="button" data-i18n="refresh">Refresh</button>
+          <button id="btn-sync" class="btn primary" type="button" data-i18n="syncMenubar">Write to menubar</button>
+        </div>
+      </header>
+
+      <section class="notice" id="sync-status" aria-live="polite"></section>
+      <section class="hero-row" id="summary"></section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <h1 data-i18n="accountsTitle">Accounts</h1>
+            <p data-i18n="accountsDesc">Plug and play: GPT and x load automatically. Manage bar / detail visibility here.</p>
+          </div>
+        </div>
+        <div id="accounts" class="accounts"></div>
+      </section>
+
+      <section class="panel" id="deps-panel">
+        <div class="panel-head">
+          <div>
+            <h1 data-i18n="depsTitle">Dependencies</h1>
+            <p data-i18n="depsDesc">Headroom runs locally. Menubar needs SwiftBar.</p>
+          </div>
+        </div>
+        <div class="deps-grid">
+          <div class="dep-card">
+            <div class="dep-title" data-i18n="swiftbarTitle">SwiftBar</div>
+            <div class="dep-state" id="swiftbar-state">…</div>
+            <div class="dep-actions">
+              <button id="btn-install-swiftbar" class="btn sm primary" type="button" data-i18n="installSwiftBar">Install SwiftBar (Homebrew)</button>
+              <button id="btn-open-swiftbar" class="btn sm" type="button" data-i18n="openSwiftBar">Open SwiftBar</button>
+              <a id="btn-swiftbar-site" class="btn sm" href="https://github.com/swiftbar/SwiftBar/releases/latest" target="_blank" rel="noreferrer" data-i18n="openSwiftBarSite">Open download page</a>
+              <button id="btn-write-plugin" class="btn sm" type="button" data-i18n="writePlugin">Write menubar plugin</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel danger-panel">
+        <div class="panel-head">
+          <div>
+            <h1 data-i18n="dangerZone">Danger zone</h1>
+            <p data-i18n="uninstallDesc">Removes menubar plugin, login autostart, and local Headroom config. Does not touch GPT/Grok auth files.</p>
+          </div>
+        </div>
+        <div class="danger-actions">
+          <div class="service-line">
+            <span data-i18n="autostart">Login autostart</span>
+            <strong id="autostart-state">…</strong>
+            <button id="btn-autostart" class="btn sm" type="button" data-i18n="installAutostart">Enable login autostart</button>
+          </div>
+          <button id="btn-uninstall" class="btn danger" type="button" data-i18n="uninstallBtn">Uninstall completely</button>
+        </div>
+      </section>
+
+      <details class="advanced">
+        <summary data-i18n="advanced">Advanced settings</summary>
+        <div class="advanced-grid">
+          <label><span data-i18n="host">Host</span><input id="set-host" /></label>
+          <label><span data-i18n="port">Port</span><input id="set-port" type="number" /></label>
+          <label><span data-i18n="refreshSec">Refresh (sec)</span><input id="set-refresh" type="number" /></label>
+          <label><span data-i18n="menubarMode">Menubar mode</span>
+            <select id="set-menubar-mode">
+              <option value="detail" data-i18n="modeDetail">Show in title + detail</option>
+              <option value="compact" data-i18n="modeCompact">Short title, details on click</option>
+            </select>
+          </label>
+          <label><span data-i18n="menubarJoin">Title separator</span><input id="set-menubar-join" placeholder=" · " /></label>
+          <label><span data-i18n="emptyTitle">Empty title</span><input id="set-menubar-empty" placeholder="HR" /></label>
+          <label class="span"><span data-i18n="pluginDir">SwiftBar folder</span><input id="set-plugin-dir" data-i18n-placeholder="pluginDirPh" placeholder="empty = automatic" /></label>
+          <div class="span actions">
+            <button id="btn-save-settings" class="btn" type="button" data-i18n="saveSettings">Save settings</button>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>

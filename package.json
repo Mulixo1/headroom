@@ -1,0 +1,51 @@
+{
+  "name": "headroom",
+  "version": "0.1.0",
+  "private": false,
+  "description": "macOS menubar + local panel for GPT and x (Grok) remaining usage headroom.",
+  "type": "module",
+  "bin": {
+    "headroom": "./bin/headroom.mjs"
+  },
+  "scripts": {
+    "start": "node bin/headroom.mjs start",
+    "dev": "node --watch bin/headroom.mjs start",
+    "panel": "node bin/headroom.mjs open",
+    "sync-swiftbar": "node bin/headroom.mjs sync-swiftbar",
+    "quota": "node bin/headroom.mjs quota",
+    "setup": "node scripts/install.mjs --no-start",
+    "install:local": "node scripts/install.mjs",
+    "uninstall": "node scripts/uninstall.mjs",
+    "service:install": "node bin/headroom.mjs service install",
+    "service:status": "node bin/headroom.mjs service status",
+    "test": "node --test test/*.test.js"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "scripts/",
+    "docs/",
+    "config.example.json",
+    "LICENSE",
+    "README.md",
+    "SECURITY.md",
+    "CONTRIBUTING.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "keywords": [
+    "swiftbar",
+    "menubar",
+    "openai",
+    "chatgpt",
+    "codex",
+    "xai",
+    "grok",
+    "quota",
+    "usage",
+    "headroom",
+    "macos"
+  ]
+}
