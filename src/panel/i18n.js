@@ -79,9 +79,13 @@ const dict = {
     swiftbarMissing: "missing",
     swiftbarRunning: "running",
     openSwiftBarDocs: "Install guide",
+    copySwiftBarCmd: "Copy install command",
+    copiedSwiftBarCmd: "Install command copied",
     openSwiftBar: "Open SwiftBar",
     openSwiftBarSite: "Open download page",
     writePlugin: "Write menubar plugin",
+    autostartHealthy: "healthy",
+    autostartNeedsRepair: "needs repair",
   },
   tr: {
     htmlLang: "tr",
@@ -161,9 +165,13 @@ const dict = {
     swiftbarMissing: "yok",
     swiftbarRunning: "çalışıyor",
     openSwiftBarDocs: "Kurulum rehberi",
+    copySwiftBarCmd: "Kurulum komutunu kopyala",
+    copiedSwiftBarCmd: "Kurulum komutu kopyalandı",
     openSwiftBar: "SwiftBar'ı aç",
     openSwiftBarSite: "İndirme sayfasını aç",
     writePlugin: "Menubar eklentisini yaz",
+    autostartHealthy: "sağlıklı",
+    autostartNeedsRepair: "onarım gerekli",
   },
 };
 
