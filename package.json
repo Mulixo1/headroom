@@ -29,7 +29,8 @@
     "LICENSE",
     "README.md",
     "SECURITY.md",
-    "CONTRIBUTING.md"
+    "CONTRIBUTING.md",
+    "AGENTS.md"
   ],
   "engines": {
     "node": ">=20"

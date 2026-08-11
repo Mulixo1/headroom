@@ -90,7 +90,10 @@ if (process.platform === "darwin" && !deps.swiftbar.installed) {
     }
   } else {
     log("Continuing without SwiftBar. Panel will still work; menubar needs SwiftBar later.");
-    log(`Download: ${deps.swiftbar.downloadUrl}`);
+    log("Copy/paste SwiftBar install:");
+    log("  brew install --cask swiftbar");
+    log("  open -a SwiftBar");
+    log(`Manual download: ${deps.swiftbar.downloadUrl}`);
   }
 } else if (deps.swiftbar.installed && !deps.swiftbar.running) {
   log("Starting SwiftBar...");
