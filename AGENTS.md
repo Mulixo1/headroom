@@ -36,3 +36,10 @@ node scripts/install.mjs --with-swiftbar
 ```
 
 3. Open dashboard: http://127.0.0.1:8787
+
+## Legal pointers
+
+- License: MIT (`LICENSE`)
+- Ownership/notice: `NOTICE`
+- Plain-language legal notes: `docs/LEGAL.md`
+- Do not commit credentials or claim third-party affiliation.

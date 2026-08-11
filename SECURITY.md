@@ -1,29 +1,40 @@
 # Security Policy
 
-## What Headroom does
+## Scope
 
-Headroom is a **local-only** macOS helper that reads your existing GPT/Grok auth files and shows remaining usage in SwiftBar + a localhost panel.
+Headroom is a local macOS utility that can:
 
-## Trust boundaries
+- run a localhost dashboard/API on `127.0.0.1`
+- read local provider auth files (if present)
+- display remaining usage estimates
+- write a SwiftBar plugin and optional LaunchAgent
 
-- Binds **only** to `127.0.0.1`
-- Rejects non-local sockets
-- Does **not** accept or store API keys in the repo
-- Does **not** send tokens to third-party proxies
-- Tokens stay in provider-native files:
-  - `~/.codex/auth.json`
-  - `~/.grok/auth.json`
-- Runtime config lives in user config dir (not the git tree):
+## Trust boundaries (as implemented)
+
+- Service bind address is localhost (`127.0.0.1`)
+- Non-local sockets are rejected by the local server
+- Provider tokens are not stored in the git repository
+- Runtime config defaults to user config directory:
   - macOS: `~/Library/Application Support/Headroom/`
-- API responses strip provider `raw` payloads and never return token values
+- Local API responses are designed to avoid returning raw provider token material
+
+## What this project does not claim
+
+- No claim of formal security certification/audit
+- No claim that provider endpoints or policies are controlled by Headroom
+- No claim that third-party apps/services are endorsed by Headroom
 
 ## Reporting a vulnerability
 
-Please open a private GitHub security advisory. Do not open a public issue with exploit details.
+Please open a private GitHub security advisory for this repository.  
+Do not open a public issue with exploit details.
 
-## Hardening notes
+## Supported versions
 
-- Body size limited
-- Host/port sanitized (localhost only)
-- Static panel path traversal blocked
-- Basic security headers on panel/API responses
+Security fixes are considered for the latest published release on `main`.
+
+## Operational advice
+
+- Keep provider CLIs/apps updated
+- Do not commit auth files or machine-local config
+- Review LaunchAgent status if Node paths change (`node bin/headroom.mjs service status`)

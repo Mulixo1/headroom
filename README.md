@@ -234,4 +234,36 @@ node bin/headroom.mjs service uninstall
 
 ## License
 
-MIT
+This repository is licensed under the **MIT License**.
+
+- Full legal text: [`LICENSE`](./LICENSE)
+- Short notice: [`NOTICE`](./NOTICE)
+- Plain-language notes: [`docs/LEGAL.md`](./docs/LEGAL.md)
+
+Copyright (c) 2026 Mulixo.
+
+SPDX-License-Identifier: MIT
+
+### What this means
+
+- Copyright remains with the copyright holder (Mulixo)
+- MIT grants broad use/modification/distribution permissions under the license terms
+- The software is provided “AS IS”, without warranty
+
+### What this does not mean
+
+- Not affiliated with OpenAI, xAI, SwiftBar, Apple, or other third parties
+- No transfer of third-party trademarks or service rights
+- No guarantee of provider API availability or account policy compliance outcomes
+
+## Disclaimer
+
+Headroom is an independent local utility for displaying remaining usage information using local configuration/auth material already present on the user’s machine.
+
+Users are responsible for:
+
+- their own provider accounts and credentials
+- compliance with third-party terms
+- deciding whether this tool is appropriate for their environment
+
+This repository documentation is technical product documentation, not legal advice.

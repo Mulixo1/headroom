@@ -145,3 +145,12 @@ Repair/re-enable:
 ```bash
 node bin/headroom.mjs service repair
 ```
+
+
+## Legal/compliance constraints for agents
+
+- Do not commit secrets or local auth files.
+- Do not claim affiliation with OpenAI/xAI/SwiftBar/Apple.
+- Do not present quota success as legal/policy approval from providers.
+- Treat MIT as the project license; keep copyright notices intact in distributions.
+- If install succeeds but quota fails, report that as auth/provider-state issue, not license issue.

@@ -176,3 +176,11 @@ Repair if needed:
 ```bash
 node bin/headroom.mjs service repair
 ```
+
+
+## Legal note (short)
+
+- Headroom is MIT-licensed open source. See `LICENSE` and `docs/LEGAL.md`.
+- Copyright: Mulixo.
+- OpenAI/ChatGPT/Codex, xAI/Grok, SwiftBar, Apple/macOS names are third-party marks used for interoperability description only.
+- You are responsible for your own accounts/credentials and provider terms.

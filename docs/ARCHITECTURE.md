@@ -28,3 +28,10 @@
 - Non-local sockets rejected
 - API responses exclude raw provider payloads
 - No secrets in repository files
+
+## Legal boundaries
+
+- Code license: MIT (`LICENSE`)
+- Copyright holder: Mulixo (`NOTICE`)
+- Third-party service names are interoperability references only
+- Local credential files remain user-managed outside this repository

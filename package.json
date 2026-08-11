@@ -32,7 +32,9 @@
     "README.md",
     "SECURITY.md",
     "CONTRIBUTING.md",
-    "AGENTS.md"
+    "AGENTS.md",
+    "NOTICE",
+    "docs/LEGAL.md"
   ],
   "engines": {
     "node": ">=20"
@@ -59,5 +61,8 @@
     "url": "https://github.com/Mulixo1/headroom/issues"
   },
   "homepage": "https://github.com/Mulixo1/headroom#readme",
-  "author": "Mulixo"
+  "author": {
+    "name": "Mulixo",
+    "url": "https://github.com/Mulixo1"
+  }
 }
