@@ -5,6 +5,7 @@ import { fetchAccountQuota } from "../src/providers/index.js";
 import { startServer } from "../src/server/http.js";
 import { syncSwiftBarPlugins } from "../src/swiftbar/generate.js";
 import {
+  ensureLaunchAgentHealthy,
   installLaunchAgent,
   serviceStatus,
   uninstallAll,
@@ -19,6 +20,7 @@ Usage:
   headroom quota                 Print remaining quotas
   headroom sync-swiftbar         Generate SwiftBar plugins
   headroom service install       Install login autostart (LaunchAgent)
+  headroom service repair        Repair autostart paths if Node/repo moved
   headroom service status        Show autostart status
   headroom service uninstall     Remove autostart + menubar + local config
   headroom help
@@ -81,6 +83,12 @@ async function cmdService(sub) {
       process.exit(1);
     }
     console.log(`Autostart installed: ${res.path}`);
+    return;
+  }
+  if (sub === "repair") {
+    const res = ensureLaunchAgentHealthy();
+    console.log(JSON.stringify(res, null, 2));
+    if (!res.ok) process.exit(1);
     return;
   }
   if (sub === "status") {

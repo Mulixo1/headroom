@@ -117,3 +117,13 @@ Don't:
 4. verify SwiftBar plugin path
 5. report dashboard URL: `http://127.0.0.1:8787`
 6. if quota fails, report missing/invalid auth files separately from install success
+
+
+## Autostart repair
+
+If Node version manager paths change (e.g. nvm), repair LaunchAgent:
+
+```bash
+node bin/headroom.mjs service repair
+node bin/headroom.mjs service status
+```

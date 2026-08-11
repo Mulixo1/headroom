@@ -210,6 +210,7 @@ node bin/headroom.mjs open
 node bin/headroom.mjs quota
 node bin/headroom.mjs sync-swiftbar
 node bin/headroom.mjs service install
+node bin/headroom.mjs service repair
 node bin/headroom.mjs service status
 node bin/headroom.mjs service uninstall
 ```

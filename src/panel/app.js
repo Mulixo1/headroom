@@ -262,7 +262,11 @@ async function refreshService() {
     const st = await api("/api/service/status");
     state.service = st;
     const el = $("#autostart-state");
-    if (el) el.textContent = st.launchAgentInstalled ? tt("autostartOn") : tt("autostartOff");
+    if (el) {
+      if (!st.launchAgentInstalled) el.textContent = tt("autostartOff");
+      else if (st.launchAgentHealthy === false) el.textContent = tt("autostartOn") + " · " + tt("autostartNeedsRepair");
+      else el.textContent = tt("autostartOn") + " · " + tt("autostartHealthy");
+    }
   } catch {
     const el = $("#autostart-state");
     if (el) el.textContent = "—";
@@ -283,6 +287,8 @@ async function refreshService() {
     if (openBtn) openBtn.disabled = !sb.installed;
     const code = $("#swiftbar-install-cmd");
     if (code) code.style.display = sb.installed ? "none" : "block";
+    const copyBtn = $("#btn-copy-swiftbar-cmd");
+    if (copyBtn) copyBtn.style.display = sb.installed ? "none" : "inline-flex";
   } catch {
     const el = $("#swiftbar-state");
     if (el) el.textContent = "—";
@@ -388,6 +394,18 @@ function bind() {
     openSb.onclick = async () => {
       try { await api("/api/deps/swiftbar/open", { method: "POST", body: "{}" }); }
       catch (e) { setStatus(e.message || String(e)); }
+    };
+  }
+  const copySb = $("#btn-copy-swiftbar-cmd");
+  if (copySb) {
+    copySb.onclick = async () => {
+      const code = $("#swiftbar-install-cmd")?.textContent || "brew install --cask swiftbar\nopen -a SwiftBar";
+      try {
+        await navigator.clipboard.writeText(code);
+        setStatus(tt("copiedSwiftBarCmd"));
+      } catch {
+        setStatus(code);
+      }
     };
   }
   const writePlugin = $("#btn-write-plugin");

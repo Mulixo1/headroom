@@ -12,6 +12,7 @@ import {
 import { fetchAccountQuota, listProviders } from "../providers/index.js";
 import { syncSwiftBarPlugins } from "../swiftbar/generate.js";
 import {
+  ensureLaunchAgentHealthy,
   installLaunchAgent,
   serviceStatus,
   uninstallAll,
@@ -424,6 +425,10 @@ export function startServer({ host, port } = {}) {
     server.listen(listenPort, listenHost, () => {
       try {
         autoSync(cfg);
+      } catch {}
+      // If autostart exists but node/repo path drifted, repair it.
+      try {
+        ensureLaunchAgentHealthy();
       } catch {}
       resolve({
         server,
