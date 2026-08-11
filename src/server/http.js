@@ -223,7 +223,7 @@ export function createServer() {
         return sendJson(res, 200, {
           ok: true,
           service: "headroom",
-          version: "0.1.0",
+          version: "0.1.1",
         });
       }
 
