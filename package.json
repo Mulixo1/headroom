@@ -18,7 +18,7 @@
     "uninstall": "node scripts/uninstall.mjs",
     "service:install": "node bin/headroom.mjs service install",
     "service:status": "node bin/headroom.mjs service status",
-    "test": "node --test test/*.test.js",
+    "test": "node --test --test-concurrency=1 test/*.test.js",
     "service:repair": "node bin/headroom.mjs service repair",
     "ci": "npm test && node bin/headroom.mjs help"
   },

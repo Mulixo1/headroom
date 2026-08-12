@@ -175,16 +175,31 @@ export function loadConfig() {
 }
 
 export function saveConfig(config) {
-  ensureDir(headroomHome());
+  const home = headroomHome();
+  ensureDir(home);
   const file = configPath();
   const cleaned = {
     version: 1,
     settings: sanitizeSettings(config.settings || {}),
     accounts: ensureCoreAccounts(config.accounts || []),
   };
-  const tmp = `${file}.tmp`;
+  // Unique tmp avoids parallel-test races (ENOENT on rename).
+  const tmp = path.join(
+    home,
+    `config.${process.pid}.${Date.now()}.${Math.random().toString(16).slice(2)}.tmp`,
+  );
   fs.writeFileSync(tmp, JSON.stringify(cleaned, null, 2));
-  fs.renameSync(tmp, file);
+  try {
+    fs.renameSync(tmp, file);
+  } catch (err) {
+    // Fallback for rare FS races on some CI runners.
+    try {
+      fs.writeFileSync(file, JSON.stringify(cleaned, null, 2));
+    } finally {
+      try { fs.unlinkSync(tmp); } catch {}
+    }
+    if (!fs.existsSync(file)) throw err;
+  }
   return cleaned;
 }
 
