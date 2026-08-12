@@ -18,8 +18,8 @@ test("remaining math", () => {
   assert.equal(roundPct(remainingFromUsed(0)), 100);
 });
 
-test("loadConfig returns gpt+x only", () => {
+test("loadConfig returns gpt+x+cursor", () => {
   const cfg = loadConfig();
   const providers = cfg.accounts.map((a) => a.provider).sort();
-  assert.deepEqual(providers, ["chatgpt-wham", "xai-credits"]);
+  assert.deepEqual(providers, ["chatgpt-wham", "cursor-usage", "xai-credits"]);
 });

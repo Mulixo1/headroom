@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { ensureDir, expandHome, headroomHome } from "../core/paths.js";
 
-const SUPPORTED_PROVIDERS = new Set(["chatgpt-wham", "xai-credits"]);
+const SUPPORTED_PROVIDERS = new Set(["chatgpt-wham", "xai-credits", "cursor-usage"]);
 
 const DEFAULT_ACCOUNTS = [
   {
@@ -32,6 +32,21 @@ const DEFAULT_ACCOUNTS = [
     auth: {
       mode: "file",
       path: "~/.grok/auth.json",
+      jsonPath: "",
+    },
+  },
+  {
+    id: "cursor-main",
+    provider: "cursor-usage",
+    label: "Cursor",
+    enabled: true,
+    menubar: true,
+    showInBar: true,
+    showInDetail: true,
+    order: 30,
+    auth: {
+      mode: "file",
+      path: "~/Library/Application Support/Cursor/User/globalStorage/state.vscdb",
       jsonPath: "",
     },
   },

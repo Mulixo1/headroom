@@ -1,8 +1,8 @@
 {
   "name": "headroom",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
-  "description": "Local macOS menubar and localhost dashboard for remaining GPT and Grok usage (MIT-licensed).",
+  "description": "Local macOS menubar and localhost dashboard for remaining GPT, Grok, and Cursor usage (MIT-licensed).",
   "type": "module",
   "bin": {
     "headroom": "./bin/headroom.mjs"
@@ -51,7 +51,8 @@
     "quota",
     "usage",
     "headroom",
-    "macos"
+    "macos",
+    "cursor"
   ],
   "repository": {
     "type": "git",

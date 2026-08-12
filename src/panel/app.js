@@ -116,7 +116,7 @@ function renderSummary() {
 
   $("#summary").innerHTML = `
     <div class="hero"><div class="k">${esc(tt("barTitle"))}</div><div class="v">${barCount}</div><div class="m">${esc(tt("visibleModels"))}</div></div>
-    <div class="hero"><div class="k">${esc(tt("avgRemaining"))}</div><div class="v ${tone(avg)}">${avg == null ? "—" : avg + "%"}</div><div class="m">${esc(tt("gptX"))}</div></div>
+    <div class="hero"><div class="k">${esc(tt("avgRemaining"))}</div><div class="v ${tone(avg)}">${avg == null ? "—" : avg + "%"}</div><div class="m">${esc(esc("GPT · x · Cursor"))}</div></div>
     <div class="hero"><div class="k">${esc(tt("lowest"))}</div><div class="v ${tone(low?.remainingPercent)}">${low ? esc(low.label) + " " + low.remainingPercent + "%" : "—"}</div><div class="m">${esc(tt("priority"))}</div></div>
   `;
 }
@@ -124,6 +124,7 @@ function renderSummary() {
 function authHint(provider) {
   if (provider === "chatgpt-wham") return "~/.codex/auth.json";
   if (provider === "xai-credits") return "~/.grok/auth.json";
+  if (provider === "cursor-usage") return "Cursor/User/globalStorage/state.vscdb";
   return "";
 }
 

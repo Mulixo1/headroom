@@ -34,7 +34,11 @@ export function formatReset(value) {
     return new Date(ts * 1000).toLocaleString();
   }
   if (typeof value === "string") {
-    const d = new Date(value);
+    const trimmed = value.trim();
+    if (/^\d+$/.test(trimmed)) {
+      return formatReset(Number(trimmed));
+    }
+    const d = new Date(trimmed);
     if (!Number.isNaN(d.getTime())) return d.toLocaleString();
     return value;
   }

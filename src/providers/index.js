@@ -1,7 +1,8 @@
 import { chatgptWhamProvider } from "./chatgpt-wham.js";
 import { xaiCreditsProvider } from "./xai-credits.js";
+import { cursorUsageProvider } from "./cursor-usage.js";
 
-const providers = [chatgptWhamProvider, xaiCreditsProvider];
+const providers = [chatgptWhamProvider, xaiCreditsProvider, cursorUsageProvider];
 const byId = new Map(providers.map((p) => [p.id, p]));
 
 export function listProviders() {

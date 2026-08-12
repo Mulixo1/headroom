@@ -103,7 +103,7 @@ Auth files:
 | Provider | File |
 |---|---|
 | GPT | `~/.codex/auth.json` |
-| x / Grok | `~/.grok/auth.json` |
+| x / Grok | `~/.grok/auth.json` |\n| Cursor | `~/Library/Application Support/Cursor/User/globalStorage/state.vscdb` |
 
 ---
 

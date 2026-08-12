@@ -41,6 +41,21 @@
         "path": "~/.grok/auth.json",
         "jsonPath": ""
       }
+    },
+    {
+      "id": "cursor-main",
+      "provider": "cursor-usage",
+      "label": "Cursor",
+      "enabled": true,
+      "menubar": true,
+      "showInBar": true,
+      "showInDetail": true,
+      "order": 30,
+      "auth": {
+        "mode": "file",
+        "path": "~/Library/Application Support/Cursor/User/globalStorage/state.vscdb",
+        "jsonPath": ""
+      }
     }
   ]
 }
