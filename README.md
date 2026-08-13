@@ -103,7 +103,8 @@ Auth files:
 | Provider | File |
 |---|---|
 | GPT | `~/.codex/auth.json` |
-| x / Grok | `~/.grok/auth.json` |\n| Cursor | `~/Library/Application Support/Cursor/User/globalStorage/state.vscdb` |
+| x / Grok | `~/.grok/auth.json` |\n| Cursor Auto (Grok / Cursor models) | same Cursor `state.vscdb` |
+| Cursor API (other models) | same Cursor `state.vscdb` |
 
 ---
 

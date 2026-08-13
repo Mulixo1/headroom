@@ -36,14 +36,31 @@ const DEFAULT_ACCOUNTS = [
     },
   },
   {
-    id: "cursor-main",
+    id: "cursor-auto",
     provider: "cursor-usage",
-    label: "Cursor",
+    metric: "auto",
+    label: "Cursor Auto",
     enabled: true,
     menubar: true,
     showInBar: true,
     showInDetail: true,
     order: 30,
+    auth: {
+      mode: "file",
+      path: "~/Library/Application Support/Cursor/User/globalStorage/state.vscdb",
+      jsonPath: "",
+    },
+  },
+  {
+    id: "cursor-api",
+    provider: "cursor-usage",
+    metric: "api",
+    label: "Cursor API",
+    enabled: true,
+    menubar: true,
+    showInBar: true,
+    showInDetail: true,
+    order: 31,
     auth: {
       mode: "file",
       path: "~/Library/Application Support/Cursor/User/globalStorage/state.vscdb",
@@ -107,14 +124,37 @@ function sanitizeSettings(settings = {}) {
   return next;
 }
 
+function cursorMetric(account) {
+  if (account?.provider !== "cursor-usage") return null;
+  if (account.metric === "api" || account.id === "cursor-api") return "api";
+  return "auto";
+}
+
+function accountSlot(account) {
+  if (account?.provider === "cursor-usage") return "cursor-usage:" + cursorMetric(account);
+  return account?.provider || "";
+}
+
 function normalizeAccount(account) {
   const provider = account?.provider;
   if (!SUPPORTED_PROVIDERS.has(provider)) return null;
-  const base = DEFAULT_ACCOUNTS.find((a) => a.provider === provider) || {};
+  const metric = cursorMetric({ ...account, provider });
+  const slot = accountSlot({ ...account, provider, metric });
+  const base =
+    DEFAULT_ACCOUNTS.find((a) => accountSlot(a) === slot) ||
+    DEFAULT_ACCOUNTS.find((a) => a.provider === provider) ||
+    {};
+  const id = account.id || base.id;
   return {
     ...base,
     ...account,
     provider,
+    id,
+    metric: provider === "cursor-usage" ? metric : undefined,
+    label:
+      provider === "cursor-usage" && (!account.label || account.label === "Cursor")
+        ? (metric === "api" ? "Cursor API" : "Cursor Auto")
+        : (account.label || base.label),
     enabled: account.enabled !== false,
     menubar: account.menubar !== false,
     showInBar: account.showInBar != null ? !!account.showInBar : account.menubar !== false,
@@ -130,16 +170,21 @@ function normalizeAccount(account) {
 
 function ensureCoreAccounts(accounts) {
   const next = [];
-  const seenProviders = new Set();
+  const seen = new Set();
   for (const raw of accounts || []) {
     const acc = normalizeAccount(raw);
     if (!acc) continue;
-    if (seenProviders.has(acc.provider)) continue;
-    seenProviders.add(acc.provider);
+    const slot = accountSlot(acc);
+    if (seen.has(slot)) continue;
+    seen.add(slot);
     next.push(acc);
   }
   for (const def of DEFAULT_ACCOUNTS) {
-    if (!seenProviders.has(def.provider)) next.push(deepClone(def));
+    const slot = accountSlot(def);
+    if (!seen.has(slot)) {
+      next.push(deepClone(def));
+      seen.add(slot);
+    }
   }
   next.sort((a, b) => (a.order ?? 100) - (b.order ?? 100));
   return next;
@@ -206,8 +251,8 @@ export function saveConfig(config) {
 export function upsertAccount(account) {
   const cfg = loadConfig();
   const normalized = normalizeAccount(account);
-  if (!normalized) throw new Error("Only GPT and x providers are supported");
-  const idx = cfg.accounts.findIndex((a) => a.provider === normalized.provider || a.id === normalized.id);
+  if (!normalized) throw new Error("Only GPT, x, and Cursor providers are supported");
+  const idx = cfg.accounts.findIndex((a) => a.id === normalized.id || accountSlot(a) === accountSlot(normalized));
   if (idx >= 0) {
     normalized.id = cfg.accounts[idx].id;
     cfg.accounts[idx] = { ...cfg.accounts[idx], ...normalized, id: cfg.accounts[idx].id };

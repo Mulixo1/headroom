@@ -157,6 +157,7 @@ function publicAccount(account) {
     id: account.id,
     provider: account.provider,
     label: account.label,
+    metric: account.metric || null,
     enabled: account.enabled !== false,
     menubar: account.menubar !== false,
     showInBar: account.showInBar !== false,
@@ -223,7 +224,7 @@ export function createServer() {
         return sendJson(res, 200, {
           ok: true,
           service: "headroom",
-          version: "0.1.2",
+          version: "0.1.3",
         });
       }
 

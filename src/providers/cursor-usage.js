@@ -5,6 +5,19 @@ import { spawnSync } from "node:child_process";
 import { remainingFromUsed, roundPct, formatReset } from "../core/math.js";
 import { nowIso } from "./utils.js";
 
+export function normalizeCursorMetric(account) {
+  if (account?.metric === "api" || account?.id === "cursor-api") return "api";
+  return "auto";
+}
+
+export function cursorUsedPercent(planUsage = {}, metric = "auto") {
+  const key = metric === "api" ? "apiPercentUsed" : "autoPercentUsed";
+  const n = Number(planUsage[key]);
+  if (Number.isFinite(n)) return n;
+  const total = Number(planUsage.totalPercentUsed);
+  return Number.isFinite(total) ? total : NaN;
+}
+
 function expand(p) {
   if (!p) return p;
   if (p.startsWith("~/")) return path.join(os.homedir(), p.slice(2));
@@ -99,41 +112,47 @@ async function postJson(url, { headers = {}, body = {}, timeoutMs = 12000 } = {}
   }
 }
 
+const USAGE_CACHE_MS = 12000;
+let usageCache = { at: 0, token: "", data: null };
+
+async function fetchPeriodUsage(access) {
+  const now = Date.now();
+  if (usageCache.data && usageCache.token === access && now - usageCache.at < USAGE_CACHE_MS) {
+    return usageCache.data;
+  }
+  const data = await postJson(
+    "https://api2.cursor.sh/aiserver.v1.DashboardService/GetCurrentPeriodUsage",
+    {
+      headers: {
+        Authorization: `Bearer ${access}`,
+        "User-Agent": "headroom-cursor/0.1.3",
+      },
+      body: {},
+    },
+  );
+  usageCache = { at: now, token: access, data };
+  return data;
+}
+
 export const cursorUsageProvider = {
   id: "cursor-usage",
   title: "Cursor",
-  description: "Included usage remaining via Cursor local auth + DashboardService",
+  description: "Cursor Auto (Grok/Cursor models) and Cursor API remaining via local auth",
 
   async fetchQuota(account) {
     const auth = loadCursorAuth(account);
-    const data = await postJson(
-      "https://api2.cursor.sh/aiserver.v1.DashboardService/GetCurrentPeriodUsage",
-      {
-        headers: {
-          Authorization: `Bearer ${auth.access}`,
-          "User-Agent": "headroom-cursor/0.1.2",
-        },
-        body: {},
-      },
-    );
+    const data = await fetchPeriodUsage(auth.access);
 
+    const metric = normalizeCursorMetric(account);
     const planUsage = data?.planUsage || {};
-    const limit = Number(planUsage.limit);
-    const remainingUnits = Number(planUsage.remaining);
-    let usedPercent = Number(planUsage.totalPercentUsed);
+    const usedPercent = cursorUsedPercent(planUsage, metric);
     if (!Number.isFinite(usedPercent)) {
-      if (Number.isFinite(limit) && limit > 0 && Number.isFinite(remainingUnits)) {
-        usedPercent = ((limit - remainingUnits) / limit) * 100;
-      }
+      throw new Error(metric === "api" ? "Cursor apiPercentUsed missing" : "Cursor autoPercentUsed missing");
     }
-    if (!Number.isFinite(usedPercent)) {
-      throw new Error("Cursor totalPercentUsed missing");
-    }
-
-    let remainingPercent = remainingFromUsed(usedPercent);
-    if (Number.isFinite(limit) && limit > 0 && Number.isFinite(remainingUnits)) {
-      remainingPercent = (remainingUnits / limit) * 100;
-    }
+    const remainingPercent = remainingFromUsed(usedPercent);
+    const label =
+      account.label ||
+      (metric === "api" ? "Cursor API" : "Cursor Auto");
 
     let planName = auth.planHint || null;
     try {
@@ -142,7 +161,7 @@ export const cursorUsageProvider = {
         {
           headers: {
             Authorization: `Bearer ${auth.access}`,
-            "User-Agent": "headroom-cursor/0.1.2",
+            "User-Agent": "headroom-cursor/0.1.3",
           },
           body: {},
         },
@@ -155,16 +174,19 @@ export const cursorUsageProvider = {
     return {
       provider: this.id,
       accountId: account.id,
-      label: account.label || "Cursor",
+      label,
       usedPercent: roundPct(usedPercent),
       remainingPercent: roundPct(remainingPercent),
       resetAt: formatReset(data?.billingCycleEnd),
       plan: planName,
       email: auth.email,
-      source: "cursor:dashboard-period-usage",
+      source: metric === "api" ? "cursor:api-usage" : "cursor:auto-usage",
       fetchedAt: nowIso(),
       raw: {
         displayMessage: data?.displayMessage || null,
+        autoModelSelectedDisplayMessage: data?.autoModelSelectedDisplayMessage || null,
+        namedModelSelectedDisplayMessage: data?.namedModelSelectedDisplayMessage || null,
+        metric,
         planUsage,
         billingCycleStart: data?.billingCycleStart || null,
         billingCycleEnd: data?.billingCycleEnd || null,

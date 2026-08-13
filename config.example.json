@@ -6,7 +6,7 @@
     "refreshSeconds": 30,
     "showUsedInDropdown": true,
     "menubarMode": "detail",
-    "menubarJoin": " \u00b7 ",
+    "menubarJoin": " · ",
     "menubarEmptyTitle": "HR",
     "locale": "system",
     "swiftbarPluginDir": ""
@@ -43,14 +43,31 @@
       }
     },
     {
-      "id": "cursor-main",
+      "id": "cursor-auto",
       "provider": "cursor-usage",
-      "label": "Cursor",
+      "metric": "auto",
+      "label": "Cursor Auto",
       "enabled": true,
       "menubar": true,
       "showInBar": true,
       "showInDetail": true,
       "order": 30,
+      "auth": {
+        "mode": "file",
+        "path": "~/Library/Application Support/Cursor/User/globalStorage/state.vscdb",
+        "jsonPath": ""
+      }
+    },
+    {
+      "id": "cursor-api",
+      "provider": "cursor-usage",
+      "metric": "api",
+      "label": "Cursor API",
+      "enabled": true,
+      "menubar": true,
+      "showInBar": true,
+      "showInDetail": true,
+      "order": 31,
       "auth": {
         "mode": "file",
         "path": "~/Library/Application Support/Cursor/User/globalStorage/state.vscdb",

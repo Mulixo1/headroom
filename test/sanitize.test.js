@@ -18,8 +18,12 @@ test("remaining math", () => {
   assert.equal(roundPct(remainingFromUsed(0)), 100);
 });
 
-test("loadConfig returns gpt+x+cursor", () => {
+test("loadConfig returns gpt+x+cursor buckets", () => {
   const cfg = loadConfig();
-  const providers = cfg.accounts.map((a) => a.provider).sort();
-  assert.deepEqual(providers, ["chatgpt-wham", "cursor-usage", "xai-credits"]);
+  const providers = cfg.accounts.map((a) => a.provider);
+  assert.ok(providers.includes("chatgpt-wham"));
+  assert.ok(providers.includes("xai-credits"));
+  const cursor = cfg.accounts.filter((a) => a.provider === "cursor-usage");
+  assert.equal(cursor.length, 2);
+  assert.deepEqual(cursor.map((a) => a.metric).sort(), ["api", "auto"]);
 });
